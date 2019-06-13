@@ -21,27 +21,46 @@ var getRandomNumber = function (min, max) {
 };
 
 /**
- * Функция создания объектов персонажей
- * @return {Object[]} массив объектов
+ * Функция генерирования случайного индекса элемента массива
+ * @param {Object[]} mas массив, индекс которого является искомым
+ * @return {Number} результат генерации
  */
-var createCharacters = function () {
-  var CHARACTERS_NUM = 4;
+var getRandomIndexElement = function (mas) {
+  return getRandomNumber(0, mas.length - 1);
+};
+
+/**
+ * Функция генерирования объекта случайного волшебника
+ * @return {Object} объект волшебника
+ */
+var generateRandomWizard = function () {
   var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
   var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
   var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
-  var characters = [];
 
-  for (var i = 0; i < CHARACTERS_NUM; i++) {
-    var name = getRandomNumber(0, names.length - 1);
-    characters.push({
-      'name': names[name] + ' ' + surnames[name],
-      'coatColor': coatColor[getRandomNumber(0, coatColor.length - 1)],
-      'eyesColor': eyesColor[getRandomNumber(0, eyesColor.length - 1)]
-    });
+  var randomWizard = {
+    'name': names[getRandomIndexElement(names)] + ' ' + surnames[getRandomIndexElement(surnames)],
+    'coatColor': coatColor[getRandomIndexElement(coatColor)],
+    'eyesColor': eyesColor[getRandomIndexElement(eyesColor)]
+  };
+
+  return randomWizard;
+};
+
+/**
+ * Функция генерирования массива объектов случайных волшебников
+ * @return {Object[]} массив случайных волшебников
+ */
+var generateRandomWizards = function () {
+  var WIZARDS_NUM = 4;
+  var wizards = [];
+
+  for (var i = 0; i < WIZARDS_NUM; i++) {
+    wizards.push(generateRandomWizard());
   }
 
-  return characters;
+  return wizards;
 };
 
 /**
@@ -84,6 +103,6 @@ setup();
 
 var insertionPoint = document.querySelector('.setup-similar-list');
 var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-var elements = createDomElements(createCharacters(), template);
+var elements = createDomElements(generateRandomWizards(), template);
 
 renderDomElement(elements, insertionPoint);

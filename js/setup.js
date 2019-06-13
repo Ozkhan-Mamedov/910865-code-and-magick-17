@@ -56,10 +56,9 @@ var createDomElements = function (characters, template) {
   for (var i = 0; i < characters.length; i++) {
     var elementModel = template.cloneNode(true);
 
-    template.querySelector('.setup-similar-label').textContent = characters[i].name;
-    template.querySelector('.wizard-coat').style.fill = characters[i].coatColor;
-    template.querySelector('.wizard-eyes').style.fill = characters[i].eyesColor;
-    // elements[i] = elementModel;
+    elementModel.querySelector('.setup-similar-label').textContent = characters[i].name;
+    elementModel.querySelector('.wizard-coat').style.fill = characters[i].coatColor;
+    elementModel.querySelector('.wizard-eyes').style.fill = characters[i].eyesColor;
     elements.push(elementModel);
   }
 

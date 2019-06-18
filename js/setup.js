@@ -1,14 +1,10 @@
 'use strict';
 
-/**
- * Функция первоначальной настройки
- */
-var setup = function () {
-  var userDialog = document.querySelector('.setup');
-
-  userDialog.classList.remove('hidden');
-  document.querySelector('.setup-similar').classList.remove('hidden');
-};
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var coatsColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
+var fireballsColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 /**
  * Функция генерирования случайного числа
@@ -99,10 +95,97 @@ var renderDomElement = function (elements, block) {
   block.appendChild(nodes);
 };
 
-setup();
+/**
+ * Функция открытия попапа
+ */
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+/**
+ * Функция закрытия попапа
+ */
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+/**
+ * Функция закрытия попапа по клавише ESC
+ * @param {Object} evt объект события
+ */
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+/**
+ * Функция проверяет клавиатурное нажатие по ESC в элементе формы
+ * @param {Object} evt объект события
+ */
+var onInputEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    evt.stopPropagation();
+  } else {
+    document.removeEventListener('keydown', onInputEscPress);
+  }
+};
+
+/**
+ * Функция отслеживает клавиатурное нажатие в элементе формы
+ */
+var focusInput = function () {
+  nameInput.addEventListener('keydown', onInputEscPress);
+};
 
 var insertionPoint = document.querySelector('.setup-similar-list');
 var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 var elements = createDomElements(generateRandomWizards(), template);
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var nameInput = setup.querySelector('.setup-user-name');
+var wizardCoat = document.querySelector('.wizard-coat');
+var wizardEyes = document.querySelector('.wizard-eyes');
+var wizardFireball = document.querySelector('.setup-fireball-wrap');
+var wizardCoatInput = document.querySelector('input[name="coat-color"]');
+var wizardEyesInput = document.querySelector('input[name="eyes-color"]');
+var wizardFireballInput = document.querySelector('input[name="fireball-color"]');
 
+document.querySelector('.setup-similar').classList.remove('hidden');
 renderDomElement(elements, insertionPoint);
+wizardCoat.addEventListener('click', function () {
+  var randomIndex = getRandomIndexElement(coatsColors);
+  wizardCoat.style.fill = coatsColors[randomIndex];
+  wizardCoatInput.setAttribute('value', coatsColors[randomIndex]);
+});
+wizardEyes.addEventListener('click', function () {
+  var randomIndex = getRandomIndexElement(eyesColors);
+  wizardEyes.style.fill = eyesColors[randomIndex];
+  wizardEyesInput.setAttribute('value', eyesColors[randomIndex]);
+});
+wizardFireball.addEventListener('click', function () {
+  var randomIndex = getRandomIndexElement(fireballsColors);
+  wizardFireball.style.backgroundColor = fireballsColors[randomIndex];
+  wizardFireballInput.setAttribute('value', fireballsColors[randomIndex]);
+});
+nameInput.addEventListener('focus', focusInput);
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+

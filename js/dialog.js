@@ -15,6 +15,10 @@
 
     var dragged = false;
 
+    /**
+     * Обработчик события перемещения мыши
+     * @param {Object} moveEvt объект события
+     */
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
@@ -33,6 +37,10 @@
       setupDialogElement.style.left = (setupDialogElement.offsetLeft - shift.x) + 'px';
     };
 
+    /**
+     * Обработчик события при отпускании кнопки мыши
+     * @param {Object} upEvt объект события
+     */
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
@@ -40,8 +48,12 @@
       document.removeEventListener('mouseup', onMouseUp);
 
       if (dragged) {
-        var onClickPreventDefault = function (evt) {
-          evt.preventDefault();
+        /**
+         * Обработчик для решения конфликта нажатия по иконке и перетаскивания окна
+         * @param {Object} isDraggedEvt объект события
+         */
+        var onClickPreventDefault = function (isDraggedEvt) {
+          isDraggedEvt.preventDefault();
           dialogHandler.removeEventListener('click', onClickPreventDefault);
         };
         dialogHandler.addEventListener('click', onClickPreventDefault);

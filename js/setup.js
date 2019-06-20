@@ -5,6 +5,8 @@ var ENTER_KEYCODE = 13;
 var coatsColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 var fireballsColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var SETUP_POS_X = '50%';
+var SETUP_POS_Y = 80;
 
 /**
  * Функция генерирования случайного числа
@@ -174,6 +176,8 @@ wizardFireball.addEventListener('click', function () {
 nameInput.addEventListener('focus', focusInput);
 setupOpen.addEventListener('click', function () {
   openPopup();
+  setup.style.left = SETUP_POS_X;
+  setup.style.top = SETUP_POS_Y + 'px';
 });
 setupOpen.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {

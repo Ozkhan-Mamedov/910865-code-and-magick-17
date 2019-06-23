@@ -14,16 +14,19 @@
 
   wizardCoat.addEventListener('click', function () {
     var randomIndex = window.util.getRandomIndexElement(coatsColors);
+
     wizardCoat.style.fill = coatsColors[randomIndex];
     wizardCoatInput.setAttribute('value', coatsColors[randomIndex]);
   });
   wizardEyes.addEventListener('click', function () {
     var randomIndex = window.util.getRandomIndexElement(eyesColors);
+
     wizardEyes.style.fill = eyesColors[randomIndex];
     wizardEyesInput.setAttribute('value', eyesColors[randomIndex]);
   });
   wizardFireball.addEventListener('click', function () {
     var randomIndex = window.util.getRandomIndexElement(fireballsColors);
+
     wizardFireball.style.backgroundColor = fireballsColors[randomIndex];
     wizardFireballInput.setAttribute('value', fireballsColors[randomIndex]);
   });

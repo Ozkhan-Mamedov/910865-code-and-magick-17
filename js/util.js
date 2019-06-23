@@ -15,16 +15,34 @@
 
   /**
    * Функция генерирования случайного индекса элемента массива
-   * @param {Object[]} mas массив, индекс которого является искомым
+   * @param {String[]} arr массив, индекс которого является искомым
    * @return {Number} результат генерации
    */
-  var getRandomIndexElement = function (mas) {
-    return getRandomNumber(0, mas.length - 1);
+  var getRandomIndexElement = function (arr) {
+    return getRandomNumber(0, arr.length - 1);
+  };
+
+  /**
+   * Функция поиска индекса максимального элемента массива
+   * @param {Object[]} searchObj массив
+   * @return {Number} индекс элемента с максимальным значением
+   */
+  var searchMaxResultIndex = function (searchObj) {
+    var maxResultIndex = 0;
+
+    for (var i = 0; i < searchObj.length; i++) {
+      if (searchObj[i] > searchObj[maxResultIndex]) {
+        maxResultIndex = i;
+      }
+    }
+
+    return maxResultIndex;
   };
 
   window.util = {
     setup: setup,
     getRandomNumber: getRandomNumber,
-    getRandomIndexElement: getRandomIndexElement
+    getRandomIndexElement: getRandomIndexElement,
+    searchMaxResultIndex: searchMaxResultIndex
   };
 })();

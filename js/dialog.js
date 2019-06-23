@@ -18,12 +18,11 @@
       x: evt.clientX,
       y: evt.clientY
     };
-
     var dragged = false;
 
     /**
      * Обработчик события перемещения мыши
-     * @param {Object} moveEvt объект события
+     * @param {Object} moveEvt объект события перемещения мыши
      */
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -38,25 +37,23 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-
       window.util.setup.style.top = (window.util.setup.offsetTop - shift.y) + 'px';
       window.util.setup.style.left = (window.util.setup.offsetLeft - shift.x) + 'px';
     };
 
     /**
      * Обработчик события при отпускании кнопки мыши
-     * @param {Object} upEvt объект события
+     * @param {Object} upEvt объект события отпускания кнопки мыши
      */
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
 
       if (dragged) {
         /**
          * Обработчик для решения конфликта нажатия по иконке и перетаскивания окна
-         * @param {Object} isDraggedEvt объект события
+         * @param {Object} isDraggedEvt объект события перемещения мыши
          */
         var onClickPreventDefault = function (isDraggedEvt) {
           isDraggedEvt.preventDefault();
@@ -88,7 +85,7 @@
 
   /**
    * Функция закрытия попапа по клавише ESC
-   * @param {Object} evt объект события
+   * @param {Object} evt объект события нажатия на клавишу
    */
   var onPopupEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
@@ -98,7 +95,7 @@
 
   /**
    * Функция проверяет клавиатурное нажатие по ESC в элементе формы
-   * @param {Object} evt объект события
+   * @param {Object} evt объект события нажатия на кнопку клавиатуры
    */
   var onInputEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {

@@ -117,12 +117,13 @@
 
   /**
    * Обработчик загрузки данных с сервера
+   * @param {Object[]} wizards массив загруженных объектов
    */
   var onLoad = function (wizards) {
     document.querySelector('.setup-similar').classList.remove('hidden');
 
     if (insertionPoint.children.length) {
-      while (insertionPoint.children.length != 0) {
+      while (insertionPoint.children.length !== 0) {
         insertionPoint.removeChild(insertionPoint.lastChild);
       }
     }
@@ -132,6 +133,7 @@
 
   /**
    * Обработчик ошибки загрузки данных с сервера
+   * @param {String} error сообщение ошибки
    */
   var onError = function (error) {
     var node = document.createElement('div');

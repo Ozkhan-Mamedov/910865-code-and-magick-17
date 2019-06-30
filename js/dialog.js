@@ -7,9 +7,12 @@
   var SETUP_POS_Y = 80;
 
   var dialogHandler = window.util.setup.querySelector('.upload');
+  var form = document.querySelector('.setup-wizard-form');
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = window.util.setup.querySelector('.setup-close');
   var nameInput = window.util.setup.querySelector('.setup-user-name');
+  var insertionPoint = document.querySelector('.setup-similar-list');
+  var template = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -112,15 +115,47 @@
     nameInput.addEventListener('keydown', onInputEscPress);
   };
 
+  /**
+   * Обработчик загрузки данных с сервера
+   */
+  var onLoad = function (wizards) {
+    document.querySelector('.setup-similar').classList.remove('hidden');
+
+    if (insertionPoint.children.length) {
+      while (insertionPoint.children.length != 0) {
+        insertionPoint.removeChild(insertionPoint.lastChild);
+      }
+    }
+
+    window.renderDomElements(window.createDomElements(wizards, template));
+  };
+
+  /**
+   * Обработчик ошибки загрузки данных с сервера
+   */
+  var onError = function (error) {
+    var node = document.createElement('div');
+
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+    node.textContent = error;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
   nameInput.addEventListener('focus', focusInput);
   setupOpen.addEventListener('click', function () {
     openPopup();
     window.util.setup.style.left = SETUP_POS_X;
     window.util.setup.style.top = SETUP_POS_Y + 'px';
+    window.backend.load(onLoad, onError);
   });
   setupOpen.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
       openPopup();
+      window.backend.load(onLoad, onError);
     }
   });
   setupClose.addEventListener('click', function () {
@@ -130,5 +165,11 @@
     if (evt.keyCode === ENTER_KEYCODE) {
       closePopup();
     }
+  });
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), function () {
+      closePopup();
+    }, onError);
   });
 })();

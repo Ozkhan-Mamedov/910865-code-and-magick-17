@@ -15,11 +15,33 @@
 
   /**
    * Функция генерирования случайного индекса элемента массива
-   * @param {String[]} arr массив, индекс которого является искомым
+   * @param {*[]} arr массив, индекс которого является искомым
    * @return {Number} результат генерации
    */
   var getRandomIndexElement = function (arr) {
     return getRandomNumber(0, arr.length - 1);
+  };
+
+  /**
+   * Функция исключает повторения из массива
+   * @param {Object[]} arr массив, который переписываем
+   * @param {Number} arrLength количество необходимых элементов массива
+   * @return {Object[]}
+   */
+  var excludeSimilarElements = function (arr, arrLength) {
+    var modifiedArr = [];
+
+    for (var i = 0; i < arrLength; i++) {
+      var temp = arr[getRandomIndexElement(arr)];
+
+      if (modifiedArr.includes(temp)) {
+        i--;
+      } else {
+        modifiedArr[i] = temp;
+      }
+    }
+
+    return modifiedArr;
   };
 
   /**
@@ -43,6 +65,7 @@
     setup: setup,
     getRandomNumber: getRandomNumber,
     getRandomIndexElement: getRandomIndexElement,
-    searchMaxResultIndex: searchMaxResultIndex
+    searchMaxResultIndex: searchMaxResultIndex,
+    excludeSimilarElements: excludeSimilarElements
   };
 })();
